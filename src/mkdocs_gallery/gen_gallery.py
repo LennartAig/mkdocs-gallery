@@ -98,6 +98,7 @@ DEFAULT_GALLERY_CONF = {
     "image_srcset": [],
     "default_thumb_file": None,
     "line_numbers": False,
+    "offline": False
 }
 
 logger = mkdocs_compatibility.getLogger("mkdocs-gallery")

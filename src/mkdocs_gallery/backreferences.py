@@ -270,7 +270,7 @@ BACKREF_THUMBNAIL_TEMPLATE = THUMBNAIL_TEMPLATE
 # """
 
 
-def _thumbnail_div(script_results: GalleryScriptResults, is_backref: bool = False, check: bool = True):
+def _thumbnail_div(script_results: GalleryScriptResults, is_backref: bool = False, check: bool = True, offline: bool = False):
     """
     Generate MD to place a thumbnail in a gallery.
 
@@ -299,7 +299,11 @@ def _thumbnail_div(script_results: GalleryScriptResults, is_backref: bool = Fals
     thumb = script_results.thumb_rel_root_gallery
 
     # Relative path to the html tutorial that will be generated from the md
-    example_html = script_results.script.md_file_rel_root_gallery.with_suffix("")
+    # TODO: Handle cases where example is generated as index.html in subfolder
+    if script_results.script.gallery_conf["offline"]:
+        example_html = script_results.script.md_file_rel_root_gallery.with_suffix(".html")
+    else:
+        example_html = str(script_results.script.md_file_rel_root_gallery.with_suffix("")) + "/"
 
     template = BACKREF_THUMBNAIL_TEMPLATE if is_backref else THUMBNAIL_TEMPLATE
     return template.format(
